@@ -1,4 +1,9 @@
-﻿using BankTimeApp.Infrastructure.Persistence.Context;
+﻿using BankTimeApp.ApplicationLayer.Interfaces.DomainServiceInterfaces;
+using BankTimeApp.ApplicationLayer.Interfaces.StructuralServices;
+using BankTimeApp.Domain.Entities;
+using BankTimeApp.Infrastructure.Persistence.Context;
+using BankTimeApp.Infrastructure.Persistence.Repositories;
+using BankTimeApp.Infrastructure.Shared.StructuralImplementations;
 using BankTimeApp.StartUp.ServiceCollection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +27,7 @@ namespace BankTimeApp
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            var directory = "E:\\UOC\\.NET\\BankTimeApp\\BankTimeApp";
+            var directory = "C:\\Users\\MarcVilà\\source\\repos\\BankTime";
             var builder = new ConfigurationBuilder()
                 .SetBasePath(directory)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
@@ -34,7 +39,10 @@ namespace BankTimeApp
 
             ServiceProvider = serviceCollection.BuildServiceProvider();
 
-           
+            var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+            mainWindow.Show();
+
+
         }
 
         private void ConfigureServices(IServiceCollection services)
@@ -42,7 +50,11 @@ namespace BankTimeApp
             services.AddApplicationDatabase(Configuration);
             services.AddIdentityDatabase(Configuration);
 
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient(typeof(MainWindow));
+
+        
         }
 
     }

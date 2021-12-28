@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace BankTimeApp.Infrastructure.Identity.Context
@@ -13,8 +14,10 @@ namespace BankTimeApp.Infrastructure.Identity.Context
         public IdentityDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<IdentityDbContext>();
-            optionsBuilder.UseSqlServer("Server=DESKTOP-DUTALF4;Database=BankTimeApp;Trusted_Connection=True;",
-                    options => options.EnableRetryOnFailure());
+            optionsBuilder.UseSqlite("Filename=Database.db",options =>
+            {
+                options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
+            });
 
             return new IdentityDbContext(optionsBuilder.Options);
         }

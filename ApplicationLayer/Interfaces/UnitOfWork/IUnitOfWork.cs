@@ -5,6 +5,7 @@ namespace BankTimeApp.ApplicationLayer.Interfaces.StructuralServices
 {
     public interface IUnitOfWork
     {
-        Task<int> CompleteAsync(CancellationToken token = new CancellationToken());
+        int Complete();
+        Task<int> CompleteAsync(CancellationToken cancellationToken = new CancellationToken());
     }
 }
