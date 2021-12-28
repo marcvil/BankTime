@@ -9,8 +9,6 @@ namespace BankTimeApp.Infrastructure.Identity.Context
 {
     public class IdentitytDbContextFactory : IDesignTimeDbContextFactory<IdentityDbContext>
     {
-
-
         public IdentityDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<IdentityDbContext>();

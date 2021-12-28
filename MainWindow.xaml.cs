@@ -29,18 +29,13 @@ namespace BankTimeApp
 
         public MainWindow(ICategoryService categoryService, IUnitOfWork unitOfWork)
         {
-         
             InitializeComponent();
             this.categoryService = categoryService;
             this.unitOfWork = unitOfWork;
-
         }
-
-       
 
         private void btn_Click(object sender, RoutedEventArgs e)
         {
-            
             var category = new Category()
             {
                 Name = "Category1"
@@ -48,21 +43,11 @@ namespace BankTimeApp
 
             categoryService.Post(category);
             unitOfWork.CompleteAsync();
-
-
-
-
         }
         private void btn_Click2(object sender, RoutedEventArgs e)
         {
-
             var x = categoryService.GetById(1);
             Console.WriteLine("hi");
-          
-
-
-
-
         }
     }
 }

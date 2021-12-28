@@ -27,7 +27,7 @@ namespace BankTimeApp
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            var directory = "C:\\Users\\MarcVilà\\source\\repos\\BankTime";
+            var directory = Directory.GetCurrentDirectory();
             var builder = new ConfigurationBuilder()
                 .SetBasePath(directory)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
