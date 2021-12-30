@@ -10,7 +10,11 @@ namespace BankTimeApp.Infrastructure.Persistence.Context
 {
     public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
     {
-        public ApplicationDbContext CreateDbContext(string[] args)
+        public ApplicationDbContextFactory()
+        {
+        }
+
+        public ApplicationDbContext CreateDbContext(string[] args = null)
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             optionsBuilder.UseSqlite("Filename=Database.db",options =>

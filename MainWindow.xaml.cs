@@ -2,6 +2,7 @@
 using BankTimeApp.ApplicationLayer.Interfaces.StructuralServices;
 using BankTimeApp.Domain.Entities;
 using BankTimeApp.FrontEnd.Pages;
+using BankTimeApp.FrontEnd.ViewModels;
 using BankTimeApp.Infrastructure.Persistence.Context;
 using System;
 using System.Collections.Generic;
@@ -25,13 +26,13 @@ namespace BankTimeApp
     /// </summary>
     public partial class MainWindow : Window
     {
+    
         public MainWindow()
         {
             InitializeComponent();
-        
-            this.contentControl.Content = new LoginView();
+          
         }
 
-       
+
     }
 }

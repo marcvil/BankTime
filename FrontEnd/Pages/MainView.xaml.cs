@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using BankTimeApp.FrontEnd.ViewModels;
+using System.Windows.Controls;
 
 namespace BankTimeApp.FrontEnd.Pages
 {
@@ -9,9 +10,7 @@ namespace BankTimeApp.FrontEnd.Pages
     {
         public MainView()
         {
-           
             InitializeComponent();
-            int x = 0;
         }
     }
 }

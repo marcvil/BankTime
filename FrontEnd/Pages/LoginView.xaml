@@ -6,10 +6,8 @@
              xmlns:local="clr-namespace:BankTimeApp.FrontEnd.Pages"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Background="#f58742">
 
-        <Button Content="Button1" HorizontalAlignment="Left" Margin="98,129,0,0" VerticalAlignment="Top" Click="btn_Click"/>
-        <Button Content="Button2" HorizontalAlignment="Left" Margin="340,129,0,0" VerticalAlignment="Top" Click="btn_Click2"/>
-        <Button Content="ToLogin" HorizontalAlignment="Left" Margin="340,300,0,0" VerticalAlignment="Top" Click="btn_ToLogin"/>
+        <Button  Content="GetById"  Height="80" FontSize="30" HorizontalAlignment="Left" Margin="292,286,0,84" Command="{Binding ChangeToNewsEVCommand}" />
     </Grid>
 </UserControl>

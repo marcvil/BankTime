@@ -13,30 +13,30 @@ namespace BankTimeApp.Infrastructure.Shared.StructuralImplementations
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly ApplicationDbContext _context;
+       
 
 
-        public UnitOfWork(ApplicationDbContext context)
+        public UnitOfWork()
         {
-            _context = context;
+        
         }
 
 
 
-        public int Complete(CancellationToken cancellationToken = new CancellationToken())
+        public int Complete(ApplicationDbContext dbContext,CancellationToken cancellationToken = new CancellationToken())
         {
-            this.ApplyAuditInformation();
-            return _context.SaveChanges();
+            this.ApplyAuditInformation( dbContext);
+            return dbContext.SaveChanges();
         }
-        public async Task<int> CompleteAsync(CancellationToken cancellationToken = new CancellationToken())
+        public async Task<int> CompleteAsync(ApplicationDbContext dbContext,CancellationToken cancellationToken = new CancellationToken())
         {
-            this.ApplyAuditInformation();
-            return await _context.SaveChangesAsync(cancellationToken);
+            this.ApplyAuditInformation(dbContext);
+            return await dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        private void ApplyAuditInformation()
+        private void ApplyAuditInformation(ApplicationDbContext dbContext)
         {
-            _context.ChangeTracker
+            dbContext.ChangeTracker
             .Entries()
             .ToList()
             .ForEach(entry =>

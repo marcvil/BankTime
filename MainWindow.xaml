@@ -4,10 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankTimeApp"
+        xmlns:controls="clr-namespace:BankTimeApp.FrontEnd.Pages"
+        xmlns:local1="clr-namespace:BankTimeApp.FrontEnd.Converters"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
-    <Grid>
-        <ContentControl x:Name="contentControl" Grid.Row="1"/>
+    <Grid Background="#121212">
+
+
+        <Button  Content="Exams"  Height="80" FontSize="30" HorizontalAlignment="Left" Margin="0,25,0,329" Command="{Binding ChangeToSchoolNewsEVCommand}" />
+        <ContentControl x:Name="contentControl" Content="{Binding currentMainUserControlEVM,Converter={local1:ApplicationUserControlValueConverter}}" Margin="100,10,0,0"/>
     </Grid>
 </Window>

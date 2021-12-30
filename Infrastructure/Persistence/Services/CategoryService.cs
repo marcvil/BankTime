@@ -11,48 +11,53 @@ namespace BankTimeApp.Infrastructure.Persistence.Services
 {
     public class CategoryService : ICategoryService
     {
-        protected readonly ApplicationDbContext _context;
-        protected readonly DbSet<Category> repository;
+        protected readonly ApplicationDbContextFactory _contextFactory;
+       
         private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryService(ApplicationDbContext context, IUnitOfWork unitOfWork)
+        public CategoryService(ApplicationDbContextFactory context, IUnitOfWork unitOfWork)
         {
-            _context = context;
-            repository = context.Set<Category>();
+            _contextFactory = context;
             _unitOfWork = unitOfWork;
         }
         public Response<Category> GetById(int id)
         {
-            var category =  repository.Find(id);
-            if(category == null)
+            using(var dbContext = _contextFactory.CreateDbContext())
             {
-                return new Response<Category>("Not found");
+                var category = dbContext.Categories.Find(id);
+                if (category == null)
+                {
+                    return new Response<Category>("Not found");
+                }
+                return new Response<Category>(category);
             }
-            return new Response<Category>(category);
+      
         }
         public Response<Category> GetByName(string name)
         {
-           var category =  repository.FirstOrDefault(x => x.Name == name);
-        
-            if (category == null)
-            {
-                return new Response<Category>("Doesn't exist");
-            }
-            return new Response<Category>(category);
+            //var category =  repository.FirstOrDefault(x => x.Name == name);
+
+            // if (category == null)
+            // {
+            //     return new Response<Category>("Doesn't exist");
+            // }
+            // return new Response<Category>(category);
+            return null;
         }
         public Response<Category> Post(Category category)
         {
-            var categoryExists = GetByName(category.Name);
+            //var categoryExists = GetByName(category.Name);
 
-            if (categoryExists.Data != null)
-            {
-                return new Response<Category>("Already exist with this name");
-            }
+            //if (categoryExists.Data != null)
+            //{
+            //    return new Response<Category>("Already exist with this name");
+            //}
 
-             _context.Add(category);
-             _unitOfWork.Complete();
-       
-            return new Response<Category>(category);
+            // _context.Add(category);
+            // _unitOfWork.Complete();
+
+            //return new Response<Category>(category);
+            return null;
         }
     }
 }

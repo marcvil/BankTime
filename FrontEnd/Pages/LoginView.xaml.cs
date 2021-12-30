@@ -15,26 +15,8 @@ namespace BankTimeApp.FrontEnd.Pages
         public LoginView()
         {
             InitializeComponent();
-          
         }
 
-        private void btn_Click(object sender, RoutedEventArgs e)
-{
-            var category = new Category()
-            {
-                Name = "Category2"
-            };
-
-        }
-        private void btn_Click2(object sender, RoutedEventArgs e)
-        {
-
-
-        }
-
-        private void btn_ToLogin(object sender, RoutedEventArgs e)
-        {
-
-        }
+       
     }
 }

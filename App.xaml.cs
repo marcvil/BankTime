@@ -1,5 +1,7 @@
 ﻿using BankTimeApp.ApplicationLayer.Interfaces.DomainServiceInterfaces;
 using BankTimeApp.ApplicationLayer.Interfaces.StructuralServices;
+using BankTimeApp.FrontEnd.ViewModels;
+using BankTimeApp.Infrastructure.Persistence.Context;
 using BankTimeApp.Infrastructure.Persistence.Services;
 using BankTimeApp.Infrastructure.Shared.StructuralImplementations;
 using BankTimeApp.StartUp.ServiceCollection;
@@ -30,13 +32,11 @@ namespace BankTimeApp
 
             Configuration = builder.Build();
 
-            var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
-
-            ServiceProvider = serviceCollection.BuildServiceProvider();
-
+            IServiceProvider serviceProvider = CreateServiceProvider();
+            
+            ICategoryService service = serviceProvider.GetRequiredService<ICategoryService>();
             Window window = new MainWindow();
-            window.DataContext = ServiceProvider.GetRequiredService<MainWindow>();
+            window.DataContext = serviceProvider.GetRequiredService<MainWindowViewModel>();
             window.Show();
 
 
@@ -46,10 +46,26 @@ namespace BankTimeApp
         {
             services.AddApplicationDatabase(Configuration);
             services.AddIdentityDatabase(Configuration);
+ 
 
             services.AddSingleton<ICategoryService, CategoryService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddTransient(typeof(MainWindow));
+          
+
+
+        }
+        private IServiceProvider CreateServiceProvider()
+        {
+            IServiceCollection services = new ServiceCollection();
+            services.AddSingleton<ApplicationDbContextFactory>();
+
+            services.AddSingleton<ICategoryService, CategoryService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<MainWindowViewModel>();
+            services.AddScoped<LoginViewModel>();
+
+
+            return services.BuildServiceProvider();
 
 
         }
