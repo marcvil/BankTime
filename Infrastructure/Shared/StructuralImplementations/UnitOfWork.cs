@@ -23,7 +23,7 @@ namespace BankTimeApp.Infrastructure.Shared.StructuralImplementations
 
 
 
-        public int Complete()
+        public int Complete(CancellationToken cancellationToken = new CancellationToken())
         {
             this.ApplyAuditInformation();
             return _context.SaveChanges();

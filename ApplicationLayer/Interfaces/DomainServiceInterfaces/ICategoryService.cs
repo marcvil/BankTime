@@ -8,7 +8,7 @@ namespace BankTimeApp.ApplicationLayer.Interfaces.DomainServiceInterfaces
 {
     public interface ICategoryService
     {
-        Task<Response<Category>> GetById(int id);
-        Task<Response<Category>> Post(Category category);
+        Response<Category> GetById(int id);
+        Response<Category> Post(Category category);
     }
 }

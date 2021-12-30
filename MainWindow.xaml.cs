@@ -38,16 +38,16 @@ namespace BankTimeApp
         {
             var category = new Category()
             {
-                Name = "Category1"
+                Name = "Category2"
             };
 
             categoryService.Post(category);
-            unitOfWork.CompleteAsync();
+            unitOfWork.Complete();
         }
         private void btn_Click2(object sender, RoutedEventArgs e)
         {
-            var x = categoryService.GetById(1);
-            Console.WriteLine("hi");
+           
+           
         }
     }
 }

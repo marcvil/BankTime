@@ -9,7 +9,7 @@ namespace BankTimeApp.Infrastructure.Persistence.Context
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
+            Database.EnsureCreated();
         }
 
     

@@ -1,6 +1,6 @@
 ﻿using BankTimeApp.ApplicationLayer.Interfaces.DomainServiceInterfaces;
 using BankTimeApp.ApplicationLayer.Interfaces.StructuralServices;
-using BankTimeApp.Infrastructure.Persistence.Repositories;
+using BankTimeApp.Infrastructure.Persistence.Services;
 using BankTimeApp.Infrastructure.Shared.StructuralImplementations;
 using BankTimeApp.StartUp.ServiceCollection;
 using Microsoft.Extensions.Configuration;

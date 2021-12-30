@@ -7,7 +7,7 @@ using BankTimeApp.ApplicationLayer;
 using System.Linq;
 using BankTimeApp.ApplicationLayer.Interfaces.StructuralServices;
 
-namespace BankTimeApp.Infrastructure.Persistence.Repositories
+namespace BankTimeApp.Infrastructure.Persistence.Services
 {
     public class CategoryService : ICategoryService
     {
@@ -21,38 +21,37 @@ namespace BankTimeApp.Infrastructure.Persistence.Repositories
             repository = context.Set<Category>();
             _unitOfWork = unitOfWork;
         }
-        public async Task<Response<Category>> GetById(int id)
+        public Response<Category> GetById(int id)
         {
-            var category = await repository.FindAsync(id);
+            var category =  repository.Find(id);
             if(category == null)
             {
                 return new Response<Category>("Not found");
             }
             return new Response<Category>(category);
         }
-        public async Task<Response<Category>> GetByName(string name)
+        public Response<Category> GetByName(string name)
         {
-            //var category = await repository.FirstOrDefaultAsync(x => x.Name == name);
-            var category = new Category();
-            category = null;
+           var category =  repository.FirstOrDefault(x => x.Name == name);
+        
             if (category == null)
             {
                 return new Response<Category>("Doesn't exist");
             }
             return new Response<Category>(category);
         }
-        public async Task<Response<Category>> Post(Category category)
+        public Response<Category> Post(Category category)
         {
-            var categoryExists = await GetByName(category.Name);
+            var categoryExists = GetByName(category.Name);
 
             if (categoryExists.Data != null)
             {
                 return new Response<Category>("Already exist with this name");
             }
 
-            await _context.AddAsync(category);
-            await _unitOfWork.CompleteAsync();
-
+             _context.Add(category);
+             _unitOfWork.Complete();
+       
             return new Response<Category>(category);
         }
     }
