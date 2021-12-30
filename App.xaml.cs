@@ -35,8 +35,9 @@ namespace BankTimeApp
 
             ServiceProvider = serviceCollection.BuildServiceProvider();
 
-            var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
-            mainWindow.Show();
+            Window window = new MainWindow();
+            window.DataContext = ServiceProvider.GetRequiredService<MainWindow>();
+            window.Show();
 
 
         }
@@ -46,7 +47,7 @@ namespace BankTimeApp
             services.AddApplicationDatabase(Configuration);
             services.AddIdentityDatabase(Configuration);
 
-            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddSingleton<ICategoryService, CategoryService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient(typeof(MainWindow));
 

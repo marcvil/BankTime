@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:BankTimeApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
     <Grid>
-        <Button Content="Button1" HorizontalAlignment="Left" Margin="98,129,0,0" VerticalAlignment="Top" Click="btn_Click"/>
-        <Button Content="Button2" HorizontalAlignment="Left" Margin="340,129,0,0" VerticalAlignment="Top" Click="btn_Click2"/>
+        <ContentControl x:Name="contentControl" Grid.Row="1"/>
     </Grid>
 </Window>

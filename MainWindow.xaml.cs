@@ -1,6 +1,7 @@
 ﻿using BankTimeApp.ApplicationLayer.Interfaces.DomainServiceInterfaces;
 using BankTimeApp.ApplicationLayer.Interfaces.StructuralServices;
 using BankTimeApp.Domain.Entities;
+using BankTimeApp.FrontEnd.Pages;
 using BankTimeApp.Infrastructure.Persistence.Context;
 using System;
 using System.Collections.Generic;
@@ -24,30 +25,13 @@ namespace BankTimeApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ICategoryService categoryService;
-        private readonly IUnitOfWork unitOfWork;
-
-        public MainWindow(ICategoryService categoryService, IUnitOfWork unitOfWork)
+        public MainWindow()
         {
             InitializeComponent();
-            this.categoryService = categoryService;
-            this.unitOfWork = unitOfWork;
+        
+            this.contentControl.Content = new LoginView();
         }
 
-        private void btn_Click(object sender, RoutedEventArgs e)
-        {
-            var category = new Category()
-            {
-                Name = "Category2"
-            };
-
-            categoryService.Post(category);
-            unitOfWork.Complete();
-        }
-        private void btn_Click2(object sender, RoutedEventArgs e)
-        {
-           
-           
-        }
+       
     }
 }
