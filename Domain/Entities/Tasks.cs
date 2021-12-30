@@ -22,14 +22,13 @@ namespace BankTimeApp.Domain.Entities
         public int UserId { get; set; }
         public ApplicationUser User { get; set; }
 
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
+
 
         public ICollection<Request> Requests { get; set; }
 
         //Many To Many
-
-        public ICollection<TaskCategories> Categories { get; set; }
-       
-
 
     }
 }

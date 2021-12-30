@@ -15,8 +15,10 @@ namespace BankTimeApp.Domain.Entities
 
         //One To Many Relationships
 
+        public ICollection<Tasks> Tasks { get; set; }
+
         //Many To Many
-        public ICollection<TaskCategories> Tasks { get; set; }
+
 
     }
 }

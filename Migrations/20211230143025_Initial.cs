@@ -165,11 +165,19 @@ namespace BankTimeApp.Migrations
                     Name = table.Column<string>(nullable: true),
                     State = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
-                    UserId1 = table.Column<string>(nullable: true)
+                    UserId1 = table.Column<string>(nullable: true),
+                    CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tasks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tasks_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalSchema: "BankTimeApp",
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Tasks_User_UserId1",
                         column: x => x.UserId1,
@@ -259,39 +267,6 @@ namespace BankTimeApp.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "TaskCategories",
-                schema: "BankTimeApp",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    ModifiedBy = table.Column<string>(nullable: true),
-                    TaskId = table.Column<int>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TaskCategories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TaskCategories_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalSchema: "BankTimeApp",
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TaskCategories_Tasks_TaskId",
-                        column: x => x.TaskId,
-                        principalSchema: "BankTimeApp",
-                        principalTable: "Tasks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Exchanges_TaskId",
                 schema: "BankTimeApp",
@@ -323,16 +298,10 @@ namespace BankTimeApp.Migrations
                 column: "UserId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaskCategories_CategoryId",
+                name: "IX_Tasks_CategoryId",
                 schema: "BankTimeApp",
-                table: "TaskCategories",
+                table: "Tasks",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TaskCategories_TaskId",
-                schema: "BankTimeApp",
-                table: "TaskCategories",
-                column: "TaskId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tasks_UserId1",
@@ -360,10 +329,6 @@ namespace BankTimeApp.Migrations
                 schema: "BankTimeApp");
 
             migrationBuilder.DropTable(
-                name: "TaskCategories",
-                schema: "BankTimeApp");
-
-            migrationBuilder.DropTable(
                 name: "UserClaims",
                 schema: "BankTimeApp");
 
@@ -380,11 +345,11 @@ namespace BankTimeApp.Migrations
                 schema: "BankTimeApp");
 
             migrationBuilder.DropTable(
-                name: "Categories",
+                name: "Tasks",
                 schema: "BankTimeApp");
 
             migrationBuilder.DropTable(
-                name: "Tasks",
+                name: "Categories",
                 schema: "BankTimeApp");
 
             migrationBuilder.DropTable(
