@@ -9,6 +9,7 @@ namespace BankTimeApp.FrontEnd.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         private ICategoryService service;
+
         public MainWindowViewModel(ICategoryService service)
         {
             this.service = service;
@@ -16,6 +17,7 @@ namespace BankTimeApp.FrontEnd.ViewModels
 
 
             ChangeToSchoolNewsEVCommand = new RouteCommand(ChangeToSchoolNewsViewEV);
+            ChangeToNewsEVCommand = new RouteCommand(ChangeToNewsViewEV);
            
         }
 
@@ -43,8 +45,15 @@ namespace BankTimeApp.FrontEnd.ViewModels
 
 
         }
+        public ICommand ChangeToNewsEVCommand { get; set; }
+        public void ChangeToNewsViewEV()
+        {
+            currentMainUserControlEVM = ApplicationMainUserControl.Login;
 
-      
+
+        }
+
+
     }
 
 }

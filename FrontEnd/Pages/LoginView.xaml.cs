@@ -1,5 +1,6 @@
 ﻿using BankTimeApp.Domain.Entities;
 using BankTimeApp.FrontEnd.ViewModels;
+using BankTimeApp.Infrastructure.Persistence.Context;
 using BankTimeApp.Infrastructure.Persistence.Services;
 using BankTimeApp.Infrastructure.Shared.StructuralImplementations;
 using System.Windows;
@@ -15,6 +16,8 @@ namespace BankTimeApp.FrontEnd.Pages
         public LoginView()
         {
             InitializeComponent();
+            var categoryService = new CategoryService(new ApplicationDbContextFactory(), new UnitOfWork());
+            this.DataContext = new LoginViewModel(categoryService);
         }
 
        

@@ -6,13 +6,15 @@
         xmlns:local="clr-namespace:BankTimeApp"
         xmlns:controls="clr-namespace:BankTimeApp.FrontEnd.Pages"
         xmlns:local1="clr-namespace:BankTimeApp.FrontEnd.Converters"
+        xmlns:local2="clr-namespace:BankTimeApp.FrontEnd.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
     <Grid Background="#121212">
 
 
-        <Button  Content="Exams"  Height="80" FontSize="30" HorizontalAlignment="Left" Margin="0,25,0,329" Command="{Binding ChangeToSchoolNewsEVCommand}" />
+        <Button  Content="Main"  Height="80" FontSize="30" HorizontalAlignment="Left" Margin="0,25,0,329" Command="{Binding ChangeToSchoolNewsEVCommand}" />
+        <Button  Content="Login"  Height="80" FontSize="30" HorizontalAlignment="Left" Margin="0,142,0,212" Command="{Binding ChangeToNewsEVCommand}" />
         <ContentControl x:Name="contentControl" Content="{Binding currentMainUserControlEVM,Converter={local1:ApplicationUserControlValueConverter}}" Margin="100,10,0,0"/>
     </Grid>
 </Window>

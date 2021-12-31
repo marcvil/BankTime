@@ -1,5 +1,6 @@
 ﻿using BankTimeApp.ApplicationLayer.Interfaces.DomainServiceInterfaces;
 using BankTimeApp.ApplicationLayer.Interfaces.StructuralServices;
+using BankTimeApp.FrontEnd.Pages;
 using BankTimeApp.FrontEnd.ViewModels;
 using BankTimeApp.Infrastructure.Persistence.Context;
 using BankTimeApp.Infrastructure.Persistence.Services;
@@ -35,7 +36,7 @@ namespace BankTimeApp
             IServiceProvider serviceProvider = CreateServiceProvider();
             
             ICategoryService service = serviceProvider.GetRequiredService<ICategoryService>();
-            Window window = new MainWindow();
+            Window window = serviceProvider.GetRequiredService<MainWindow>();
             window.DataContext = serviceProvider.GetRequiredService<MainWindowViewModel>();
             window.Show();
 
@@ -51,8 +52,6 @@ namespace BankTimeApp
             services.AddSingleton<ICategoryService, CategoryService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
           
-
-
         }
         private IServiceProvider CreateServiceProvider()
         {
@@ -63,6 +62,13 @@ namespace BankTimeApp
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<MainWindowViewModel>();
             services.AddScoped<LoginViewModel>();
+       
+
+
+            services.AddScoped<MainWindow>(s => new MainWindow(s.GetRequiredService<MainWindowViewModel>()));
+          
+
+
 
 
             return services.BuildServiceProvider();

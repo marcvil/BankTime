@@ -12,16 +12,18 @@ namespace BankTimeApp.FrontEnd.ViewModels
 {
     public class LoginViewModel :ViewModelBase
     {
-        private ICategoryService service;
+        private ICategoryService service ;
+
         public LoginViewModel(ICategoryService service)
         {
             this.service = service;
 
-            ChangeToNewsEVCommand = new RouteCommand(ChangeToNewsViewEV);
+            ChangeToEVCommand = new RouteCommand(ChangeToViewEV);
+          
         }
-        public ICommand ChangeToNewsEVCommand { get; set; }
+        public ICommand ChangeToEVCommand { get; set; }
 
-        public void ChangeToNewsViewEV()
+        public void ChangeToViewEV()
         {
 
             var x = service.GetById(1);
