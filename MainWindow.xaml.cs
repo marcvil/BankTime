@@ -33,6 +33,11 @@ namespace BankTimeApp
             this.DataContext = dataContext;
         }
 
-       
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+
     }
 }

@@ -13,9 +13,9 @@ namespace BankTimeApp.FrontEnd.Converters
         {
             switch ((ApplicationMainUserControl)value)
             {
-                
+                case ApplicationMainUserControl.Main:
+                    return null;
                 case ApplicationMainUserControl.Login:
-                    
                     return new LoginView();
                 case ApplicationMainUserControl.MainView:
                     return new MainView();

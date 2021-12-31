@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:BankTimeApp">
+
+    <FontFamily x:Key="HelveticaRegular">pack://application;,,,/FrontEnd/Resources/Fonts/#Helvetica</FontFamily>
+    <FontFamily x:Key="HelveticaBold">pack://application;,,,/FrontEnd/Resources/Fonts/#Helvetica-Bold</FontFamily>
+
+    <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
+        <Setter Property="FontFamily" Value="{StaticResource HelveticaRegular}" />
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}" x:Key="BaseBoldStyle">
+        <Setter Property="FontFamily" Value="{StaticResource HelveticaBold}" />
+    </Style>
+
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseBoldStyle}" />
+    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BaseStyle}" />
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}" />
+    <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource BaseStyle}" />
+
+</ResourceDictionary>

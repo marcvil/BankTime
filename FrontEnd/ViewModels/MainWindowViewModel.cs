@@ -21,7 +21,7 @@ namespace BankTimeApp.FrontEnd.ViewModels
            
         }
 
-        private ApplicationMainUserControl CurrentMainUserControlEVM = ApplicationMainUserControl.Login;
+        private ApplicationMainUserControl CurrentMainUserControlEVM = ApplicationMainUserControl.Main;
         public ApplicationMainUserControl currentMainUserControlEVM
         {
             get
@@ -35,6 +35,9 @@ namespace BankTimeApp.FrontEnd.ViewModels
             }
         }
 
+        private bool ButtonVisibilityVM;
+        public bool buttonVisibilityVM { get { return ButtonVisibilityVM; } set { ButtonVisibilityVM = value; OnPropertyChanged(); } }
+
         public ICommand ChangeToSchoolNewsEVCommand { get; set; }
 
         public void ChangeToSchoolNewsViewEV()
@@ -42,6 +45,7 @@ namespace BankTimeApp.FrontEnd.ViewModels
 
             var x = service.GetById(1);
             currentMainUserControlEVM = ApplicationMainUserControl.MainView;
+            
 
 
         }
@@ -49,6 +53,8 @@ namespace BankTimeApp.FrontEnd.ViewModels
         public void ChangeToNewsViewEV()
         {
             currentMainUserControlEVM = ApplicationMainUserControl.Login;
+            buttonVisibilityVM = true;
+      
 
 
         }

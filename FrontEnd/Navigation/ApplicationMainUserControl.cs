@@ -6,7 +6,8 @@ namespace BankTimeApp.FrontEnd.Navigation
 {
     public enum ApplicationMainUserControl
     {
-        Login = 0,
-        MainView = 1
+        Main = 0,
+        Login = 1,
+        MainView = 2
     }
 }

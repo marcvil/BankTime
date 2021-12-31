@@ -10,6 +10,7 @@
     <Folder Include="ApplicationLayer\Interfaces\OtherServices\" />
     <Folder Include="bin\Debug\netcoreapp3.1\" />
     <Folder Include="Domain\Settings\" />
+    <Folder Include="FrontEnd\Resources\" />
   </ItemGroup>
 
   <ItemGroup>
