@@ -18,21 +18,28 @@ namespace BankTimeApp.FrontEnd.ViewModels
         {
             this.service = service;
 
-            ChangeToEVCommand = new RouteCommand(ChangeToViewEV);
+            LoginButtonCommand = new RouteCommand(Login);
           
         }
-        public ICommand ChangeToEVCommand { get; set; }
 
-        public void ChangeToViewEV()
+        #region Properties
+        private string UserNameVM;
+        public string userNameVM { get { return UserNameVM; } set { UserNameVM = value; OnPropertyChanged(); } }
+
+
+        private string PasswordVM;
+        public string passwordVM { get { return PasswordVM; } set { PasswordVM = value; OnPropertyChanged(); } }
+
+        #endregion
+
+        #region Commands
+        public ICommand LoginButtonCommand { get; set; }
+
+        public void Login()
         {
-
-            var x = service.GetById(1);
-            var y = service.GetById(2);
-            var z = service.GetById(3);
-
-
+         
         }
-
+        #endregion
 
     }
 }

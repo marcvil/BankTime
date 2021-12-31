@@ -6,12 +6,46 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BankTimeApp.FrontEnd.Pages"
              xmlns:local1="clr-namespace:BankTimeApp.FrontEnd.ViewModels"
+          xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
+             d:DesignHeight="800" d:DesignWidth="1420"
              >
-   
-        <Grid Background="#f58742">
 
-        <Button  Content="GetById"  Height="80" FontSize="30" HorizontalAlignment="Left" Margin="292,286,0,84" Command="{Binding ChangeToEVCommand}" />
+    <Grid Background="#ffffff">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="180"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <TextBlock Text="Bienvenido a .Net Tareas" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="0 0 0 0"/>
+            </Grid>
+            <Grid Grid.Row="2">
+                <TextBlock Text="Login" HorizontalAlignment="Center" VerticalAlignment="Top"  FontSize="24" Margin="0,27,0,0"/>
+                <TextBox
+                  Text="{Binding userNameVM}"
+                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    materialDesign:HintAssist.Hint="Username"
+                  VerticalAlignment="Top" Height="38" Margin="213,78,213,0" RenderTransformOrigin="0.5,0.5" >
+                </TextBox>
+
+                <TextBox
+                  Text="{Binding passwordVM}"
+                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                  materialDesign:HintAssist.Hint="Password"
+                  VerticalAlignment="Top" Height="38"  Margin="213,129,213,0" RenderTransformOrigin="0.5,0.5" >
+                </TextBox>
+
+
+                <Button  Content="Login"  Height="44" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top"  Command="{Binding LoginButtonCommand}" Margin="0,188,0,0" />
+            </Grid>
+        </Grid>
+
     </Grid>
 </UserControl>

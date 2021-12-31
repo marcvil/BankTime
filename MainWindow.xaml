@@ -3,18 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:BankTimeApp"
         xmlns:controls="clr-namespace:BankTimeApp.FrontEnd.Pages"
         xmlns:local1="clr-namespace:BankTimeApp.FrontEnd.Converters"
         xmlns:local2="clr-namespace:BankTimeApp.FrontEnd.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="1420"
+          ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen" WindowState="Normal">
 
     <Grid Background="#121212">
 
 
         <Button  Content="Main"  Height="80" FontSize="30" HorizontalAlignment="Left" Margin="0,25,0,329" Command="{Binding ChangeToSchoolNewsEVCommand}" />
         <Button  Content="Login"  Height="80" FontSize="30" HorizontalAlignment="Left" Margin="0,142,0,212" Command="{Binding ChangeToNewsEVCommand}" />
-        <ContentControl x:Name="contentControl" Content="{Binding currentMainUserControlEVM,Converter={local1:ApplicationUserControlValueConverter}}" Margin="100,10,0,0"/>
+        <ContentControl x:Name="contentControl" Content="{Binding currentMainUserControlEVM,Converter={local1:ApplicationUserControlValueConverter}}" Margin="10,10,10,10"/>
     </Grid>
 </Window>
