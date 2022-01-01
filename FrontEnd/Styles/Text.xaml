@@ -9,5 +9,13 @@
         <Setter Property="Margin" Value="0 6" />
     </Style>
 
+    <Style TargetType="{x:Type TextBlock}" x:Key="SubHeaderText" BasedOn="{StaticResource BaseBoldStyle}">
+        <Setter Property="Foreground" Value="{StaticResource ForegroundLightBrush}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="Margin" Value="0 6" />
+    </Style>
+
 
 </ResourceDictionary>

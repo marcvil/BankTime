@@ -31,7 +31,7 @@
                 <TextBlock Text="Login" HorizontalAlignment="Center" VerticalAlignment="Top"  FontSize="24" Margin="0,27,0,0"/>
                 <TextBox
                   Text="{Binding userNameVM}"
-                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                     materialDesign:HintAssist.Hint="Username"
                   VerticalAlignment="Top" Height="38" Margin="213,78,213,0" RenderTransformOrigin="0.5,0.5" >
                 </TextBox>

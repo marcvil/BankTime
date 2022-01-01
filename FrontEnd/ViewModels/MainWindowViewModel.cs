@@ -59,6 +59,25 @@ namespace BankTimeApp.FrontEnd.ViewModels
 
         }
 
+        #region Properties
+        private string UserNameVM;
+        public string userNameVM { get { return UserNameVM; } set { UserNameVM = value; OnPropertyChanged(); } }
+
+
+        private string PasswordVM;
+        public string passwordVM { get { return PasswordVM; } set { PasswordVM = value; OnPropertyChanged(); } }
+
+        #endregion
+
+        #region Commands
+        public ICommand LoginButtonCommand { get; set; }
+
+        public void Login()
+        {
+
+        }
+        #endregion
+
 
     }
 

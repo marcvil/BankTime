@@ -48,7 +48,7 @@
             <Grid Grid.Row="2">
                 <StackPanel >
                     <Grid Margin="20 20 0 20">
-                        <Button Style="{StaticResource Hover}" Content="Banco de Tareas"  Height="80" FontSize="30" HorizontalAlignment="Left" Margin="100 0 0 0"  />
+                        <Button Style="{StaticResource Hover}" Content="Banco de Tareas"  Height="80" FontSize="30" HorizontalAlignment="Left" Margin="100 0 0 0" Command="{Binding ChangeToSchoolNewsEVCommand}"  />
                         <materialDesign:PackIcon Kind="NewspaperVariantOutline" Height="40"  Width="40" Foreground="NavajoWhite" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20 0 0 0"/>
                     </Grid>
                     <Grid Margin="20 20 0 20">
@@ -89,14 +89,71 @@
             </Grid>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="9*"/>
-                    <ColumnDefinition Width="80*"/>
+                    <ColumnDefinition Width="*"/>
+                  
                 </Grid.ColumnDefinitions>
-                <ContentControl x:Name="contentControl" Content="{Binding currentMainUserControlEVM,Converter={local1:ApplicationUserControlValueConverter}}" />
-               
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="90"/>
+                        <RowDefinition Height="240"/>
+                        <RowDefinition Height="90"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <TextBlock Text="Bienvenido a .Net Tareas" Style="{StaticResource HeaderText}"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="0 0 0 0"/>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                       
+                        <TextBox
+                  Text="{Binding userNameVM}"
+                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                            Foreground="white"
+                    materialDesign:HintAssist.Hint="Username"
+                  VerticalAlignment="Top" Height="38" Margin="213,78,213,0" RenderTransformOrigin="0.5,0.5" >
+                        </TextBox>
 
+                        <TextBox
+                  Text="{Binding passwordVM}"
+                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" ToolTip="Introduce el nombre de usuario" 
+                  materialDesign:HintAssist.Hint="Password"
+                            Foreground="White"
+                  VerticalAlignment="Top" Height="38"  Margin="213,129,213,0" RenderTransformOrigin="0.5,0.5" >
+                        </TextBox>
+                        <Button  Content="Login" Style="{StaticResource MaterialDesignPaperLightButton}" Background="Green" Height="44" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top"  Command="{Binding LoginButtonCommand}" Margin="0,188,0,0" />
+
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <TextBlock Text="Si no tienes cuenta puedes registrarte" Style="{StaticResource SubHeaderText}"   HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="0 0 0 0"/>
+                    </Grid>
+                    <Grid Grid.Row="3">
+
+                        <TextBox
+                   Text="{Binding userNameVM}"
+                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                            Foreground="white"
+                    materialDesign:HintAssist.Hint="Username"
+                  VerticalAlignment="Top" Height="38" Margin="213,78,213,0" RenderTransformOrigin="0.5,0.5" >
+                        </TextBox>
+
+                        <TextBox
+                  Text="{Binding passwordVM}"
+                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" ToolTip="Introduce el nombre de usuario" 
+                  materialDesign:HintAssist.Hint="Password"
+                            Foreground="White"
+                  VerticalAlignment="Top" Height="38"  Margin="213,129,213,0" RenderTransformOrigin="0.5,0.5" >
+                        </TextBox>
+                        <Button  Content="Registrar Cuenta" Style="{StaticResource MaterialDesignPaperLightButton}" Background="Green" Height="44" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top"  Command="{Binding LoginButtonCommand}" Margin="0,188,0,0" />
+
+                    </Grid>
+                </Grid>
+                <ContentControl x:Name="contentControl" Content="{Binding currentMainUserControlEVM,Converter={local1:ApplicationUserControlValueConverter}}" />
             </Grid>
+
+
+
         </Grid>
+           
        
     </Grid>
 </Window>
