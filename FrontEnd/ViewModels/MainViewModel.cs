@@ -8,13 +8,9 @@ namespace BankTimeApp.FrontEnd.ViewModels
 {
     class MainViewModel
     {
-        private MainView mainView;
-        private ICategoryService categoryService;
-
-        public MainViewModel(MainView mainView, ICategoryService categoryService)
+        public MainViewModel()
         {
-            this.mainView = mainView;
-            this.categoryService = categoryService;
+           
         }
     }
 

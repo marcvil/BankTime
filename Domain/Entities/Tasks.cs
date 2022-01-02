@@ -13,14 +13,14 @@ namespace BankTimeApp.Domain.Entities
 
         public int State { get; set; }  //Pasaré el int para saber que estado es
 
-
+        public string UserCreated { get; set; }
+        public string UserAssigned { get; set; }
 
         //One to One Relationships
 
         //One To Many Relationships
 
-        public int UserId { get; set; }
-        public ApplicationUser User { get; set; }
+
 
         public int CategoryId { get; set; }
         public Category Category { get; set; }

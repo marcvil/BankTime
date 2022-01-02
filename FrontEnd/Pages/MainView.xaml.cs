@@ -11,6 +11,7 @@ namespace BankTimeApp.FrontEnd.Pages
         public MainView()
         {
             InitializeComponent();
+            this.DataContext = new MainViewModel();
         }
     }
 }

@@ -2,62 +2,62 @@
 using BankTimeApp.FrontEnd.Commands;
 using BankTimeApp.FrontEnd.Navigation;
 using BankTimeApp.FrontEnd.ViewModels.Base;
+using BankTimeApp.Infrastructure.Identity;
+using BankTimeApp.Infrastructure.Identity.Context;
+using BankTimeApp.Infrastructure.Persistence.Context;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.Threading;
 using System.Windows.Input;
 
 namespace BankTimeApp.FrontEnd.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private ICategoryService service;
-
-        public MainWindowViewModel(ICategoryService service)
+        public SignInManager<ApplicationUser> UserManager { get; }
+        public MainWindowViewModel(SignInManager<ApplicationUser> userManager)
         {
-            this.service = service;
 
-
-
-            ChangeToSchoolNewsEVCommand = new RouteCommand(ChangeToSchoolNewsViewEV);
-            ChangeToNewsEVCommand = new RouteCommand(ChangeToNewsViewEV);
-           
+            ChangeToBancoTiempoCommand = new RouteCommand(ChangeToBancoTiempoView);
+            ChangeToMisTareasCommand = new RouteCommand(ChangeToMisTareasView);
+            RegisterButtonCommand = new RouteCommand(Register);
+            LoginButtonCommand = new RouteCommand(Login);
+            UserManager = userManager;
         }
 
-        private ApplicationMainUserControl CurrentMainUserControlEVM = ApplicationMainUserControl.Main;
-        public ApplicationMainUserControl currentMainUserControlEVM
+        #region MainUser COntrol
+        private ApplicationMainUserControl CurrentMainUserControl = ApplicationMainUserControl.Main;
+        public ApplicationMainUserControl currentMainUserControl
         {
             get
             {
-                return CurrentMainUserControlEVM;
+                return CurrentMainUserControl;
             }
             set
             {
-                CurrentMainUserControlEVM = value;
+                CurrentMainUserControl = value;
                 OnPropertyChanged();
             }
         }
+        #endregion
 
-        private bool ButtonVisibilityVM;
-        public bool buttonVisibilityVM { get { return ButtonVisibilityVM; } set { ButtonVisibilityVM = value; OnPropertyChanged(); } }
+        #region Visibility
+        private bool BancoTiempoButtonVisibilityVM;
+        public bool bancoTiempoButtonVisibilityVM { get { return BancoTiempoButtonVisibilityVM; } set { BancoTiempoButtonVisibilityVM = value; OnPropertyChanged(); } }
 
-        public ICommand ChangeToSchoolNewsEVCommand { get; set; }
+        private bool MisTareasButtonVisibilityVM;
+        public bool misTareasButtonVisibilityVM { get { return MisTareasButtonVisibilityVM; } set { MisTareasButtonVisibilityVM = value; OnPropertyChanged(); } }
+       
+        #endregion
+        #region Navigation
+        public ICommand ChangeToBancoTiempoCommand { get; set; }
 
-        public void ChangeToSchoolNewsViewEV()
-        {
+        public void ChangeToBancoTiempoView() { currentMainUserControl = ApplicationMainUserControl.BancoTiempo; }
+        
+        public ICommand ChangeToMisTareasCommand { get; set; }
+        public void ChangeToMisTareasView() { currentMainUserControl = ApplicationMainUserControl.MisTareas; }
 
-            var x = service.GetById(1);
-            currentMainUserControlEVM = ApplicationMainUserControl.MainView;
-            
-
-
-        }
-        public ICommand ChangeToNewsEVCommand { get; set; }
-        public void ChangeToNewsViewEV()
-        {
-            currentMainUserControlEVM = ApplicationMainUserControl.Login;
-            buttonVisibilityVM = true;
-      
-
-
-        }
+        #endregion
 
         #region Properties
         private string UserNameVM;
@@ -67,12 +67,28 @@ namespace BankTimeApp.FrontEnd.ViewModels
         private string PasswordVM;
         public string passwordVM { get { return PasswordVM; } set { PasswordVM = value; OnPropertyChanged(); } }
 
+
+        private string TestVM = "HIII";
+        public string testVM { get { return TestVM; } set { testVM = value; OnPropertyChanged(); } }
         #endregion
 
         #region Commands
         public ICommand LoginButtonCommand { get; set; }
 
         public void Login()
+        {
+
+           using(var db = new ApplicationDbContextFactory().CreateDbContext()) {
+            
+    
+            }
+            Thread.Sleep(3000);
+        }
+
+        public ICommand RegisterButtonCommand { get; set; }
+
+
+        public void Register()
         {
 
         }

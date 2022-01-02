@@ -18,6 +18,7 @@ namespace BankTimeApp.Infrastructure.Persistence.Context
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Tasks> Tasks { get; set; }
+        public DbSet<ApplicationUser> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

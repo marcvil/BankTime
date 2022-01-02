@@ -15,6 +15,10 @@ namespace BankTimeApp.FrontEnd.Converters
             {
                 case ApplicationMainUserControl.Main:
                     return null;
+                case ApplicationMainUserControl.BancoTiempo:
+                    return new BancoTiempo();
+                case ApplicationMainUserControl.MisTareas:
+                    return new BancoTiempo();
                 case ApplicationMainUserControl.Login:
                     return new LoginView();
                 case ApplicationMainUserControl.MainView:
