@@ -70,28 +70,19 @@ namespace BankTimeApp.Migrations
                     b.Property<int>("TaskId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("TimeToCompleteTask")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserWhoCompletedTaskHoursId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("UserWhoCompletedTaskId")
+                    b.Property<int>("TimeToCompleteTask")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("UserWhoOwesHoursId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("UserAssigned")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("UserWhoOwesHoursId1")
+                    b.Property<string>("UserCreated")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TaskId");
-
-                    b.HasIndex("UserWhoCompletedTaskHoursId");
-
-                    b.HasIndex("UserWhoOwesHoursId1");
+                    b.HasIndex("TaskId")
+                        .IsUnique();
 
                     b.ToTable("Exchanges");
                 });
@@ -161,12 +152,6 @@ namespace BankTimeApp.Migrations
 
                     b.Property<int>("State")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("UserAssigned")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserCreated")
-                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -248,24 +233,16 @@ namespace BankTimeApp.Migrations
             modelBuilder.Entity("BankTimeApp.Domain.Entities.Exchanges", b =>
                 {
                     b.HasOne("BankTimeApp.Domain.Entities.Tasks", "Task")
-                        .WithMany()
-                        .HasForeignKey("TaskId")
+                        .WithOne("Exchange")
+                        .HasForeignKey("BankTimeApp.Domain.Entities.Exchanges", "TaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("BankTimeApp.Infrastructure.Identity.ApplicationUser", "UserWhoCompletedTaskHours")
-                        .WithMany()
-                        .HasForeignKey("UserWhoCompletedTaskHoursId");
-
-                    b.HasOne("BankTimeApp.Infrastructure.Identity.ApplicationUser", "UserWhoOwesHours")
-                        .WithMany()
-                        .HasForeignKey("UserWhoOwesHoursId1");
                 });
 
             modelBuilder.Entity("BankTimeApp.Domain.Entities.Request", b =>
                 {
                     b.HasOne("BankTimeApp.Domain.Entities.Tasks", "Task")
-                        .WithMany("Requests")
+                        .WithMany()
                         .HasForeignKey("TaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

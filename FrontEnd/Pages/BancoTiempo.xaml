@@ -4,9 +4,124 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BankTimeApp.FrontEnd.Pages"
+              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Firebrick">
-        <TextBlock Style="{StaticResource HeaderText}" Text="Banco del Tiempo" FontSize="40" HorizontalAlignment="Left"  Margin="40 0 0 0"/>
+              d:DesignHeight="800" d:DesignWidth="1420">
+    <Grid Background="#545454">
+        <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide">
+            <materialDesign:TransitioningContent.OpeningEffects>
+                <materialDesign:TransitionEffect Kind="SlideInFromRight" Duration="0:0:0.5" />
+                <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.8" />
+            </materialDesign:TransitioningContent.OpeningEffects>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="400"/>
+                    <RowDefinition/>
+
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="320"/>
+                        <ColumnDefinition Width="1"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="50,0,10,0">
+                        <TextBlock Text="Nueva Tarea" Style="{StaticResource SubHeaderText}"   HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="0 20 0 0"/>
+                        <Grid  Height="60" Margin="50 20 0 0">
+                            <materialDesign:PackIcon Kind="Person" Height="30" Width="30" Margin="-55,0,0,0" Foreground="{StaticResource ForegroundLightBrush}" VerticalAlignment="Center"/>
+                            <TextBox
+                              materialDesign:HintAssist.Hint="Nombre Tarea" materialDesign:HintAssist.Foreground="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.HasClearButton="True" 
+                              Text="{Binding taskNameVM}"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                              VerticalAlignment="Center" Foreground="{StaticResource ForegroundLightBrush}" FontFamily="{StaticResource HelveticaRegular}" FontSize="18" Height="60"  />
+
+                        </Grid>
+
+                        <Grid Height="60" Margin="50 5 0 0">
+                            <materialDesign:PackIcon Kind="KeyVariant" Height="30" Width="30" Margin="-55,19,0,0" Foreground="{StaticResource ForegroundLightBrush}"/>
+                            <TextBox
+                                Text="{Binding hoursExpectedVM}"
+                              materialDesign:HintAssist.Hint="Horas para completar" materialDesign:HintAssist.Foreground="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource ForegroundDarkBrush}"
+                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                              VerticalAlignment="Center" Foreground="{StaticResource ForegroundLightBrush}" FontFamily="{StaticResource HelveticaRegular}" FontSize="18" Height="60" />
+                        </Grid>
+                        <Grid Height="60" Margin="50 5 0 0">
+                            <materialDesign:PackIcon Kind="KeyVariant" Height="30" Width="30" Margin="-55,19,0,0" Foreground="{StaticResource ForegroundLightBrush}"/>
+                            <TextBox
+                                Text="{Binding taskUserCreatedVM}"
+                              materialDesign:HintAssist.Hint="Usuario " materialDesign:HintAssist.Foreground="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource ForegroundDarkBrush}"
+                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                              VerticalAlignment="Center" Foreground="{StaticResource ForegroundLightBrush}" FontFamily="{StaticResource HelveticaRegular}" FontSize="18" Height="60" />
+                        </Grid>
+
+
+                        <Button Style="{StaticResource HoverWithBorder}"  Content="Guardar Tarea" Height="60" FontSize="30" HorizontalAlignment="Center"  Margin="0 20 0 0" Command="{Binding InsertTaskCommand}"  />
+
+                    </StackPanel>
+                    <Grid Grid.Column="1"  Background="{StaticResource ForegroundDarkBrush}" Opacity="0.2">
+
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <Border CornerRadius="0.2">
+                            <StackPanel>
+                            <DataGrid
+                                    ItemsSource="{Binding taskListVM}"
+                                    CanUserAddRows="False"
+                                    SelectionUnit="Cell"
+                                    SelectionMode="Extended" Height=" 300" Margin="0 20 0 0"/>
+                                <Button Style="{StaticResource Hover}" Content="Actualizar Tareas" HorizontalAlignment="Right"  Height="80" FontSize="30"    Command="{Binding GetTasksCommand}" />
+                            </StackPanel>
+                        </Border>
+
+                    </Grid>
+
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="320"/>
+                        <ColumnDefinition Width="1"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="50,0,10,0">
+                        <TextBlock Text="Nueva Categoria" Style="{StaticResource SubHeaderText}"   HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="0 20 0 0"/>
+                        <Grid  Height="60" Margin="50 20 0 0">
+                            <materialDesign:PackIcon Kind="Person" Height="30" Width="30" Margin="-55,0,0,0" Foreground="{StaticResource ForegroundLightBrush}" VerticalAlignment="Center"/>
+                            <TextBox
+                              materialDesign:HintAssist.Hint="Nombre Categoria" materialDesign:HintAssist.Foreground="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.HasClearButton="True" 
+                              Text="{Binding taskNameVM}"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                              VerticalAlignment="Center" Foreground="{StaticResource ForegroundLightBrush}" FontFamily="{StaticResource HelveticaRegular}" FontSize="18" Height="60"  />
+
+                        </Grid>
+
+                        <Button Style="{StaticResource HoverWithBorder}"  Content="Guardar categoria" Height="60" FontSize="30" HorizontalAlignment="Center"  Margin="0 20 0 0" Command="{Binding InsertTaskCommand}"  />
+
+                    </StackPanel>
+
+                    <Grid Grid.Column="2">
+                        <Border CornerRadius="0.2">
+                            <StackPanel>
+                                <DataGrid
+                                    ItemsSource="{Binding categoriaListVM}"
+                                    CanUserAddRows="False"
+                                    SelectionUnit="Cell"
+                                    SelectionMode="Extended" Height="173" />
+                                <Button Style="{StaticResource Hover}" Content="Actualizar Categoria" HorizontalAlignment="Right"  Height="80" FontSize="30"    Command="{Binding GetTasksCommand}" />
+                            </StackPanel>
+                        </Border>
+
+                    </Grid>
+                </Grid>
+            
+
+
+
+
+            </Grid>
+
+        </materialDesign:TransitioningContent>
     </Grid>
 </UserControl>

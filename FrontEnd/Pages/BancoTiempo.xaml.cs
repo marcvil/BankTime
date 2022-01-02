@@ -1,4 +1,8 @@
-﻿using System;
+﻿using BankTimeApp.FrontEnd.ViewModels;
+using BankTimeApp.Infrastructure.Persistence.Context;
+using BankTimeApp.Infrastructure.Persistence.Services;
+using BankTimeApp.Infrastructure.Shared.StructuralImplementations;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +25,9 @@ namespace BankTimeApp.FrontEnd.Pages
         public BancoTiempo()
         {
             InitializeComponent();
+            var taskService = new TasksService(new ApplicationDbContextFactory(), new UnitOfWork());
+            var categoryService = new CategoryService(new ApplicationDbContextFactory(), new UnitOfWork());
+            this.DataContext = new BancoTiempoViewModel(taskService, categoryService);
         }
     }
 }

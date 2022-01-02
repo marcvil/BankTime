@@ -2,6 +2,7 @@
 using BankTimeApp.Infrastructure.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using static BankTimeApp.Domain.Enums.Enums;
 
@@ -13,20 +14,21 @@ namespace BankTimeApp.Domain.Entities
 
         public int State { get; set; }  //Pasaré el int para saber que estado es
 
-        public string UserCreated { get; set; }
-        public string UserAssigned { get; set; }
+
 
         //One to One Relationships
 
+     
+        public Exchanges Exchange { get; set; }
+
         //One To Many Relationships
-
-
 
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 
 
-        public ICollection<Request> Requests { get; set; }
+ 
+
 
         //Many To Many
 

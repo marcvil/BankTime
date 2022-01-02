@@ -9,6 +9,8 @@ namespace BankTimeApp.ApplicationLayer.Interfaces.DomainServiceInterfaces
     public interface ICategoryService
     {
         Response<Category> GetById(int id);
+        Response<Category> GetByName(string name);
+        Response<List<Category>> GetAll();
         Response<Category> Post(Category category);
     }
 }

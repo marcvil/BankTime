@@ -4,9 +4,158 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BankTimeApp.FrontEnd.Pages"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Crimson">
-        <TextBlock Style="{StaticResource HeaderText}" Text="Mis Tareas" FontSize="40" HorizontalAlignment="Left"  Margin="40 0 0 0"/>
+             d:DesignHeight="680" d:DesignWidth="1070">
+    <Grid>
+        <Grid Background="#545454">
+            <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide">
+                <materialDesign:TransitioningContent.OpeningEffects>
+                    <materialDesign:TransitionEffect Kind="SlideInFromRight" Duration="0:0:0.5" />
+                    <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.8" />
+                </materialDesign:TransitioningContent.OpeningEffects>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="360"/>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <Grid Grid.Column="0">
+                            <Border CornerRadius="0.2">
+                                <StackPanel>
+                                    <TextBlock Text="Intercambios" Style="{StaticResource HeaderText}" FontSize="40"   HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="0 20 0 0"/>
+                                    <DataGrid
+                                    ItemsSource="{Binding taskListVM}"
+                                    CanUserAddRows="False"
+                                    SelectionUnit="Cell"
+                                    SelectionMode="Extended" Height="194" Margin="0 20 0 0"/>
+                                    <Button Style="{StaticResource Hover}" Content="Actualizar Intercambios" HorizontalAlignment="Right"  Height="80" FontSize="30"    Command="{Binding GetExchangesCommand}" />
+
+                                </StackPanel>
+                            </Border>
+
+                        </Grid>
+
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <TextBlock Text="Asignar" Style="{StaticResource SubHeaderText}"   HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="0 20 0 0"/>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <TextBox
+                              materialDesign:HintAssist.Hint="Id Tarea a asignar" materialDesign:HintAssist.Foreground="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.HasClearButton="True" 
+                              Text="{Binding idTareaAsignarVM}"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                              VerticalAlignment="Center" Foreground="{StaticResource ForegroundLightBrush}" FontFamily="{StaticResource HelveticaRegular}" FontSize="18" Height="60"  />
+                        </Grid>
+                        <Grid Grid.Column="2">
+                            <TextBox
+                              materialDesign:HintAssist.Hint="Usuario a asignar" materialDesign:HintAssist.Foreground="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.HasClearButton="True" 
+                              Text="{Binding usuarioAsignarVM}"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                              VerticalAlignment="Center" Foreground="{StaticResource ForegroundLightBrush}" FontFamily="{StaticResource HelveticaRegular}" FontSize="18" Height="60"  />
+                        </Grid>
+                        <Grid Grid.Column="3">
+                            <Button Style="{StaticResource HoverWithBorder}"  Content="Guardar asignación" Height="60" FontSize="30" HorizontalAlignment="Center"  Margin="0 20 0 0" Command="{Binding AsignarTareaCommand}"  />
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0">
+                                <TextBlock Text="Cerrar Tarea" Style="{StaticResource SubHeaderText}"   HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="0 20 0 0"/>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <TextBox
+                              materialDesign:HintAssist.Hint="Id Tarea a cerrar" materialDesign:HintAssist.Foreground="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.HasClearButton="True" 
+                              Text="{Binding idTareaCerrarVM}"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                              VerticalAlignment="Center" Foreground="{StaticResource ForegroundLightBrush}" FontFamily="{StaticResource HelveticaRegular}" FontSize="18" Height="60"  />
+                            </Grid>
+                           
+                            <Grid Grid.Column="2">
+                                <Button Style="{StaticResource HoverWithBorder}"  Content="Cerrar Tarea" Height="60" FontSize="30" HorizontalAlignment="Center"  Margin="0 20 0 0" Command="{Binding CerrarTareaCommand}"  />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="340"/>
+                            <ColumnDefinition Width="1"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="1"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="1"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <StackPanel>
+                                <Grid Grid.Column="1">
+                                    <StackPanel>
+                                    <TextBlock Text="Balance horas usuario" Style="{StaticResource SubHeaderText}"   HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="0 20 0 0"/>
+                                    <TextBox
+                              materialDesign:HintAssist.Hint="Nombre usuario a buscar" materialDesign:HintAssist.Foreground="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.HasClearButton="True" 
+                              Text="{Binding usuarioBuscarVM}"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                              VerticalAlignment="Center" Foreground="{StaticResource ForegroundLightBrush}" FontFamily="{StaticResource HelveticaRegular}" FontSize="18" Height="60"  />
+                                        <Button Style="{StaticResource HoverWithBorder}"  Content="Buscar Usuario" Height="60" FontSize="30" HorizontalAlignment="Center"   Command="{Binding BuscarUserBalanceCommand}"  />
+                                    </StackPanel>
+                                </Grid>
+                         
+
+
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Grid.Column="2">
+                            <StackPanel>
+                                <TextBlock Text="Horas a favor" Style="{StaticResource SubHeaderText}"    HorizontalAlignment="Center" VerticalAlignment="Top"  Margin="0 20 0 0"/>
+                                <TextBlock Text="{Binding horasFavorVM}" Style="{StaticResource SubHeaderText}"    HorizontalAlignment="Center" VerticalAlignment="Top"  Margin="0 20 0 0"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Grid.Column="4">
+                            <TextBlock Text="Horas en contra" Style="{StaticResource SubHeaderText}"    VerticalAlignment="Top"  Margin="0,20,0,0"/>
+                            <TextBlock Text="{Binding horasContraVM}" Style="{StaticResource SubHeaderText}"    HorizontalAlignment="Center" VerticalAlignment="Top"  Margin="0 20 0 0"/>
+                        </Grid>
+                        <Grid Grid.Column="6">
+                            <TextBlock Text="Balance Total" Style="{StaticResource SubHeaderText}"    VerticalAlignment="Top"  Margin="0,20,0,0"/>
+                            <TextBlock Text="{Binding balanceTotalVM}" Style="{StaticResource SubHeaderText}"    HorizontalAlignment="Center" VerticalAlignment="Top"  Margin="0 20 0 0"/>
+                        </Grid>
+
+
+                    </Grid>
+
+
+
+
+
+                </Grid>
+
+            </materialDesign:TransitioningContent>
+        </Grid>
     </Grid>
 </UserControl>

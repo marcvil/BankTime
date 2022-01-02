@@ -2,25 +2,23 @@
 using BankTimeApp.Infrastructure.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace BankTimeApp.Domain.Entities
 {
     public class Exchanges : Entity
     {
-        public DateTime TimeToCompleteTask { get; set; }
+        public int TimeToCompleteTask { get; set; }
         public int ExchangeState { get; set; }
 
 
         //One to One Relationships
 
-        public int UserWhoOwesHoursId { get; set; } 
-        public ApplicationUser UserWhoOwesHours { get; set; }
+        public string UserCreated { get; set; }
+        public string UserAssigned { get; set; }
 
-        public int UserWhoCompletedTaskId { get; set; }
-        public ApplicationUser UserWhoCompletedTaskHours { get; set; }
-
-
+    
         public int TaskId { get; set; }
         public Tasks Task { get; set; }
 

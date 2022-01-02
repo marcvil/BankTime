@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BankTimeApp.Migrations
 {
-    public partial class Initial : Migration
+    public partial class First : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,38 +30,7 @@ namespace BankTimeApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Role",
-                schema: "BankTimeApp",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    NormalizedName = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Role", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RoleClaims",
-                schema: "BankTimeApp",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    RoleId = table.Column<string>(nullable: true),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoleClaims", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 schema: "BankTimeApp",
                 columns: table => new
                 {
@@ -89,66 +58,7 @@ namespace BankTimeApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserClaims",
-                schema: "BankTimeApp",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<string>(nullable: true),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserClaims", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserLogins",
-                schema: "BankTimeApp",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: true),
-                    ProviderKey = table.Column<string>(nullable: true),
-                    ProviderDisplayName = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserLogins", x => x.UserId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserRoles",
-                schema: "BankTimeApp",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserRoles", x => x.UserId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserTokens",
-                schema: "BankTimeApp",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Value = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserTokens", x => x.UserId);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -164,8 +74,6 @@ namespace BankTimeApp.Migrations
                     ModifiedBy = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     State = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    UserId1 = table.Column<string>(nullable: true),
                     CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -178,13 +86,6 @@ namespace BankTimeApp.Migrations
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Tasks_User_UserId1",
-                        column: x => x.UserId1,
-                        principalSchema: "BankTimeApp",
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -198,12 +99,10 @@ namespace BankTimeApp.Migrations
                     CreatedBy = table.Column<string>(nullable: true),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     ModifiedBy = table.Column<string>(nullable: true),
-                    TimeToCompleteTask = table.Column<DateTime>(nullable: false),
+                    TimeToCompleteTask = table.Column<int>(nullable: false),
                     ExchangeState = table.Column<int>(nullable: false),
-                    UserWhoOwesHoursId = table.Column<int>(nullable: false),
-                    UserWhoOwesHoursId1 = table.Column<string>(nullable: true),
-                    UserWhoCompletedTaskId = table.Column<int>(nullable: false),
-                    UserWhoCompletedTaskHoursId = table.Column<string>(nullable: true),
+                    UserCreated = table.Column<string>(nullable: true),
+                    UserAssigned = table.Column<string>(nullable: true),
                     TaskId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -216,20 +115,6 @@ namespace BankTimeApp.Migrations
                         principalTable: "Tasks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Exchanges_User_UserWhoCompletedTaskHoursId",
-                        column: x => x.UserWhoCompletedTaskHoursId,
-                        principalSchema: "BankTimeApp",
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Exchanges_User_UserWhoOwesHoursId1",
-                        column: x => x.UserWhoOwesHoursId1,
-                        principalSchema: "BankTimeApp",
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -259,10 +144,10 @@ namespace BankTimeApp.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Requests_User_UserId1",
+                        name: "FK_Requests_Users_UserId1",
                         column: x => x.UserId1,
                         principalSchema: "BankTimeApp",
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -271,19 +156,8 @@ namespace BankTimeApp.Migrations
                 name: "IX_Exchanges_TaskId",
                 schema: "BankTimeApp",
                 table: "Exchanges",
-                column: "TaskId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Exchanges_UserWhoCompletedTaskHoursId",
-                schema: "BankTimeApp",
-                table: "Exchanges",
-                column: "UserWhoCompletedTaskHoursId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Exchanges_UserWhoOwesHoursId1",
-                schema: "BankTimeApp",
-                table: "Exchanges",
-                column: "UserWhoOwesHoursId1");
+                column: "TaskId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Requests_TaskId",
@@ -302,12 +176,6 @@ namespace BankTimeApp.Migrations
                 schema: "BankTimeApp",
                 table: "Tasks",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tasks_UserId1",
-                schema: "BankTimeApp",
-                table: "Tasks",
-                column: "UserId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -321,39 +189,15 @@ namespace BankTimeApp.Migrations
                 schema: "BankTimeApp");
 
             migrationBuilder.DropTable(
-                name: "Role",
-                schema: "BankTimeApp");
-
-            migrationBuilder.DropTable(
-                name: "RoleClaims",
-                schema: "BankTimeApp");
-
-            migrationBuilder.DropTable(
-                name: "UserClaims",
-                schema: "BankTimeApp");
-
-            migrationBuilder.DropTable(
-                name: "UserLogins",
-                schema: "BankTimeApp");
-
-            migrationBuilder.DropTable(
-                name: "UserRoles",
-                schema: "BankTimeApp");
-
-            migrationBuilder.DropTable(
-                name: "UserTokens",
-                schema: "BankTimeApp");
-
-            migrationBuilder.DropTable(
                 name: "Tasks",
                 schema: "BankTimeApp");
 
             migrationBuilder.DropTable(
-                name: "Categories",
+                name: "Users",
                 schema: "BankTimeApp");
 
             migrationBuilder.DropTable(
-                name: "User",
+                name: "Categories",
                 schema: "BankTimeApp");
         }
     }

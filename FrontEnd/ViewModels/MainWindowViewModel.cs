@@ -14,15 +14,15 @@ namespace BankTimeApp.FrontEnd.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public SignInManager<ApplicationUser> UserManager { get; }
-        public MainWindowViewModel(SignInManager<ApplicationUser> userManager)
+
+        public MainWindowViewModel()
         {
 
             ChangeToBancoTiempoCommand = new RouteCommand(ChangeToBancoTiempoView);
             ChangeToMisTareasCommand = new RouteCommand(ChangeToMisTareasView);
             RegisterButtonCommand = new RouteCommand(Register);
             LoginButtonCommand = new RouteCommand(Login);
-            UserManager = userManager;
+         
         }
 
         #region MainUser COntrol
@@ -42,10 +42,10 @@ namespace BankTimeApp.FrontEnd.ViewModels
         #endregion
 
         #region Visibility
-        private bool BancoTiempoButtonVisibilityVM;
+        private bool BancoTiempoButtonVisibilityVM = false;
         public bool bancoTiempoButtonVisibilityVM { get { return BancoTiempoButtonVisibilityVM; } set { BancoTiempoButtonVisibilityVM = value; OnPropertyChanged(); } }
 
-        private bool MisTareasButtonVisibilityVM;
+        private bool MisTareasButtonVisibilityVM = false;
         public bool misTareasButtonVisibilityVM { get { return MisTareasButtonVisibilityVM; } set { MisTareasButtonVisibilityVM = value; OnPropertyChanged(); } }
        
         #endregion
@@ -60,16 +60,22 @@ namespace BankTimeApp.FrontEnd.ViewModels
         #endregion
 
         #region Properties
-        private string UserNameVM;
-        public string userNameVM { get { return UserNameVM; } set { UserNameVM = value; OnPropertyChanged(); } }
+        private string UserNameLoginVM;
+        public string userNameLoginVM { get { return UserNameLoginVM; } set { UserNameLoginVM = value; OnPropertyChanged(); } }
 
 
-        private string PasswordVM;
-        public string passwordVM { get { return PasswordVM; } set { PasswordVM = value; OnPropertyChanged(); } }
+        private string PasswordLoginVM;
+        public string passwordLoginVM { get { return PasswordLoginVM; } set { PasswordLoginVM = value; OnPropertyChanged(); } }
+
+        private string UserNameRegisterVM;
+        public string userNameRegisterVM { get { return UserNameRegisterVM; } set { UserNameRegisterVM = value; OnPropertyChanged(); } }
 
 
-        private string TestVM = "HIII";
-        public string testVM { get { return TestVM; } set { testVM = value; OnPropertyChanged(); } }
+        private string PasswordRegisterVM;
+        public string passwordRegisterVM { get { return PasswordRegisterVM; } set { PasswordRegisterVM = value; OnPropertyChanged(); } }
+
+
+
         #endregion
 
         #region Commands
@@ -77,12 +83,9 @@ namespace BankTimeApp.FrontEnd.ViewModels
 
         public void Login()
         {
-
-           using(var db = new ApplicationDbContextFactory().CreateDbContext()) {
-            
-    
-            }
-            Thread.Sleep(3000);
+            bancoTiempoButtonVisibilityVM = true;
+            misTareasButtonVisibilityVM = true;
+            currentMainUserControl = ApplicationMainUserControl.BancoTiempo;
         }
 
         public ICommand RegisterButtonCommand { get; set; }

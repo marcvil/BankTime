@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using BankTimeApp.ApplicationLayer;
 using System.Linq;
 using BankTimeApp.ApplicationLayer.Interfaces.StructuralServices;
+using System.Collections.Generic;
 
 namespace BankTimeApp.Infrastructure.Persistence.Services
 {
@@ -35,29 +36,51 @@ namespace BankTimeApp.Infrastructure.Persistence.Services
         }
         public Response<Category> GetByName(string name)
         {
-            //var category =  repository.FirstOrDefault(x => x.Name == name);
+            using (var dbContext = _contextFactory.CreateDbContext())
+            {
+                var category = dbContext.Categories.FirstOrDefault(x => x.Name == name);
 
-            // if (category == null)
-            // {
-            //     return new Response<Category>("Doesn't exist");
-            // }
-            // return new Response<Category>(category);
-            return null;
+                if (category == null)
+                {
+                    return new Response<Category>("Doesn't exist");
+                }
+                return new Response<Category>(category);
+            }
+ 
+        }
+
+        public Response<List<Category>> GetAll()
+        {
+            using (var dbContext = _contextFactory.CreateDbContext())
+            {
+                var categories = dbContext.Categories.ToList();
+
+                if (categories.Count == 0)
+                {
+                    return new Response<List<Category>>("No existen tareas");
+                }
+                return new Response<List<Category>>(categories);
+            }
+
         }
         public Response<Category> Post(Category category)
         {
-            //var categoryExists = GetByName(category.Name);
+            using (var dbContext = _contextFactory.CreateDbContext())
+            {
+                var categoryExists = GetByName(category.Name);
 
-            //if (categoryExists.Data != null)
-            //{
-            //    return new Response<Category>("Already exist with this name");
-            //}
+                if (categoryExists.Data != null)
+                {
+                    return new Response<Category>("Already exist with this name");
+                }
 
-            // _context.Add(category);
-            // _unitOfWork.Complete();
+                dbContext.Categories.Add(category);
+                _unitOfWork.Complete(dbContext);
 
-            //return new Response<Category>(category);
+                return new Response<Category>(category);
+            }
             return null;
         }
+
     }
 }

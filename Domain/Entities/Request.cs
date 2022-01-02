@@ -11,8 +11,6 @@ namespace BankTimeApp.Domain.Entities
         public DateTime  RequestTimeToComplete { get; set; }
 
 
-
-
         //One to One Relationships
 
         //One To Many Relationships

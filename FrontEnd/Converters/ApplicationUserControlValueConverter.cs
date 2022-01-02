@@ -18,7 +18,7 @@ namespace BankTimeApp.FrontEnd.Converters
                 case ApplicationMainUserControl.BancoTiempo:
                     return new BancoTiempo();
                 case ApplicationMainUserControl.MisTareas:
-                    return new BancoTiempo();
+                    return new MisTareas();
                 case ApplicationMainUserControl.Login:
                     return new LoginView();
                 case ApplicationMainUserControl.MainView:

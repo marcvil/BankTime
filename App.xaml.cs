@@ -57,20 +57,20 @@ namespace BankTimeApp
        
             services.AddSingleton<ApplicationDbContextFactory>();
             services.AddSingleton<IdentitytDbContextFactory>();
-            services
-              .AddIdentity<ApplicationUser, IdentityRole>(options =>
-              {
-                  // Password settings.  TODO - Change Settings for more robust security
-                  options.Password.RequireDigit = false;
-                  options.Password.RequireLowercase = false;
-                  options.Password.RequireNonAlphanumeric = false;
-                  options.Password.RequireUppercase = false;
-                  options.Password.RequiredLength = 4;
 
-              })
-              .AddEntityFrameworkStores<ApplicationDbContext>()
-              .AddSignInManager<SignInManager<ApplicationUser>>()
-               .AddDefaultTokenProviders(); 
+            //services
+            //  .AddIdentity<ApplicationUser, IdentityRole>(options =>
+            //  {
+            //      // Password settings.  TODO - Change Settings for more robust security
+            //      options.Password.RequireDigit = false;
+            //      options.Password.RequireLowercase = false;
+            //      options.Password.RequireNonAlphanumeric = false;
+            //      options.Password.RequireUppercase = false;
+            //      options.Password.RequiredLength = 4;
+
+            //  })
+            //  .AddEntityFrameworkStores<ApplicationDbContext>()
+            //   .AddDefaultTokenProviders(); 
 
             services.AddSingleton<ICategoryService, CategoryService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
