@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BankTimeApp.FrontEnd.Pages"
               xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
               d:DesignHeight="800" d:DesignWidth="1420">
     <Grid Background="#545454">
@@ -54,6 +54,14 @@
                               Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                               VerticalAlignment="Center" Foreground="{StaticResource ForegroundLightBrush}" FontFamily="{StaticResource HelveticaRegular}" FontSize="18" Height="60" />
                         </Grid>
+                        <Grid Height="60" Margin="50 5 0 0">
+                            <materialDesign:PackIcon Kind="KeyVariant" Height="30" Width="30" Margin="-55,19,0,0" Foreground="{StaticResource ForegroundLightBrush}"/>
+                            <TextBox
+                                Text="{Binding categoriaTaskNameVM}"
+                              materialDesign:HintAssist.Hint="Categoria Nombre " materialDesign:HintAssist.Foreground="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource ForegroundDarkBrush}"
+                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                              VerticalAlignment="Center" Foreground="{StaticResource ForegroundLightBrush}" FontFamily="{StaticResource HelveticaRegular}" FontSize="18" Height="60" />
+                        </Grid>
 
 
                         <Button Style="{StaticResource HoverWithBorder}"  Content="Guardar Tarea" Height="60" FontSize="30" HorizontalAlignment="Center"  Margin="0 20 0 0" Command="{Binding InsertTaskCommand}"  />
@@ -91,13 +99,13 @@
                             <materialDesign:PackIcon Kind="Person" Height="30" Width="30" Margin="-55,0,0,0" Foreground="{StaticResource ForegroundLightBrush}" VerticalAlignment="Center"/>
                             <TextBox
                               materialDesign:HintAssist.Hint="Nombre Categoria" materialDesign:HintAssist.Foreground="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource ForegroundLightBrush}" materialDesign:TextFieldAssist.HasClearButton="True" 
-                              Text="{Binding taskNameVM}"
+                              Text="{Binding categoriaNameVM}"
                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                               VerticalAlignment="Center" Foreground="{StaticResource ForegroundLightBrush}" FontFamily="{StaticResource HelveticaRegular}" FontSize="18" Height="60"  />
 
                         </Grid>
 
-                        <Button Style="{StaticResource HoverWithBorder}"  Content="Guardar categoria" Height="60" FontSize="30" HorizontalAlignment="Center"  Margin="0 20 0 0" Command="{Binding InsertTaskCommand}"  />
+                        <Button Style="{StaticResource HoverWithBorder}"  Content="Guardar categoria" Height="60" FontSize="30" HorizontalAlignment="Center"  Margin="0 20 0 0" Command="{Binding InsertCategoryCommand}"  />
 
                     </StackPanel>
 
@@ -109,7 +117,7 @@
                                     CanUserAddRows="False"
                                     SelectionUnit="Cell"
                                     SelectionMode="Extended" Height="173" />
-                                <Button Style="{StaticResource Hover}" Content="Actualizar Categoria" HorizontalAlignment="Right"  Height="80" FontSize="30"    Command="{Binding GetTasksCommand}" />
+                                <Button Style="{StaticResource Hover}" Content="Actualizar Categoria" HorizontalAlignment="Right"  Height="80" FontSize="30"    Command="{Binding GetCategoriesCommand}" />
                             </StackPanel>
                         </Border>
 

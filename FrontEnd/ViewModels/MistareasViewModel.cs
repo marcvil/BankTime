@@ -1,4 +1,5 @@
 ﻿using BankTimeApp.ApplicationLayer.Interfaces.DomainServiceInterfaces;
+using BankTimeApp.Domain.DTOs;
 using BankTimeApp.Domain.Entities;
 using BankTimeApp.FrontEnd.Commands;
 using BankTimeApp.FrontEnd.ViewModels.Base;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using static BankTimeApp.Domain.Enums.Enums;
 
 namespace BankTimeApp.FrontEnd.ViewModels
 {
@@ -33,8 +35,8 @@ namespace BankTimeApp.FrontEnd.ViewModels
 
         #region Properties
 
-        private List<Exchanges> ExchangeListVM;
-        public List<Exchanges> exchangeListVM { get { return ExchangeListVM; } set { ExchangeListVM = value; OnPropertyChanged(); } }
+        private List<ExchangeListDTO> ExchangeListVM;
+        public List<ExchangeListDTO> exchangeListVM { get { return ExchangeListVM; } set { ExchangeListVM = value; OnPropertyChanged(); } }
 
         private int IdTareaAsignarVM;
         public int idTareaAsignarVM { get { return IdTareaAsignarVM; } set { IdTareaAsignarVM = value; OnPropertyChanged(); } }
@@ -68,43 +70,75 @@ namespace BankTimeApp.FrontEnd.ViewModels
             {
                 return;
             }
-            //exchangeListVM = exchangeList.Data.Select(x => new TaskListDTO { Name = x.Name, CategoryName = x.CategoryId.ToString(), StateName = x.State.ToString() }).ToList();
+            exchangeListVM = exchangeList.Data.Select(x => new ExchangeListDTO { Id= x.Id,Hours = x.TimeToCompleteTask, UserCreated = x.UserCreated, UserAsigned = x.UserAssigned, IdTareaRelacionada = x.Task.Id, TareaRelacionadaName= x.Task.Name }).ToList();
         }
 
         public ICommand AsignarTareaCommand { get; set; }
 
         public void AsignarTarea()
         {
-            //var taskList = taskService.GetAll();
-            //if (taskList.Succeeded == false)
-            //{
-            //    return;
-            //}
-            //taskListVM = taskList.Data.Select(x => new TaskListDTO { Name = x.Name, CategoryName = x.CategoryId.ToString(), StateName = x.State.ToString() }).ToList();
+            var idExchange = exchangeService.GetById(idTareaAsignarVM);
+            if (!idExchange.Succeeded)
+            {
+                return;
+            }
+
+            var exchange = idExchange.Data;
+            var task = exchange.Task;
+            exchange.UserAssigned = UsuarioAsignarVM;
+            task.State = (int)TaskState.InProcess;
+
+            exchangeService.Update(exchange);
+            taskService.Update(task);
         }
 
         public ICommand CerrarTareaCommand { get; set; }
 
         public void CerrarTarea()
         {
-            //var taskList = taskService.GetAll();
-            //if (taskList.Succeeded == false)
-            //{
-            //    return;
-            //}
-            //taskListVM = taskList.Data.Select(x => new TaskListDTO { Name = x.Name, CategoryName = x.CategoryId.ToString(), StateName = x.State.ToString() }).ToList();
+            var idExchange = exchangeService.GetById(idTareaCerrarVM);
+            if (!idExchange.Succeeded)
+            {
+                return;
+            }
+
+            var exchange = idExchange.Data;
+            var task = exchange.Task;
+            task.State = (int)TaskState.Completed;
+
+            taskService.Update(task);
         }
 
         public ICommand BuscarUserBalanceCommand { get; set; }
 
         public void BuscarUserBalance()
         {
-            //var taskList = taskService.GetAll();
-            //if (taskList.Succeeded == false)
-            //{
-            //    return;
-            //}
-            //taskListVM = taskList.Data.Select(x => new TaskListDTO { Name = x.Name, CategoryName = x.CategoryId.ToString(), StateName = x.State.ToString() }).ToList();
+            var exchangeList = exchangeService.GetAll();
+            if (exchangeList.Succeeded == false)
+            {
+                return;
+            }
+
+            var horasfavorList = exchangeList.Data.Where(x => x.UserAssigned == UsuarioBuscarVM && x.Task.State == (int)TaskState.Completed).ToList();
+            var horasContraList = exchangeList.Data.Where(x => x.UserCreated == UsuarioBuscarVM && x.Task.State == (int)TaskState.Completed).ToList();
+
+            int horasFavor = 0;
+            foreach (var exchange in horasfavorList)
+            {
+                horasFavor += exchange.TimeToCompleteTask;
+            }
+
+            int horasContra = 0;
+            foreach (var exchange in horasContraList)
+            {
+                horasContra += exchange.TimeToCompleteTask;
+            }
+
+            int BalanceTotal = horasFavor - horasContra;
+
+            horasFavorVM = horasFavor.ToString();
+            horasContraVM = horasContra.ToString();
+            balanceTotalVM = BalanceTotal.ToString();
         }
         #endregion
     }

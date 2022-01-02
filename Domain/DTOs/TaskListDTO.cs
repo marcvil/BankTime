@@ -12,6 +12,8 @@ namespace BankTimeApp.Domain.DTOs
 
         public int Hours  { get; set; }
         public string StateName  { get; set; }
+        public string UserCreated  { get; set; }
+        public string UserAssigned  { get; set; }
         
     }
 }

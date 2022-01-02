@@ -9,6 +9,7 @@ namespace BankTimeApp.ApplicationLayer.Interfaces.DomainServiceInterfaces
     {
         Response<Exchanges> GetById(int id);
         Response<List<Exchanges>> GetAll();
+        Response<Exchanges> Post(Exchanges exchange);
         Response<Exchanges> Update(Exchanges exchange);
     }
 }

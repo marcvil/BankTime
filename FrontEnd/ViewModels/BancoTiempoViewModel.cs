@@ -16,17 +16,19 @@ namespace BankTimeApp.FrontEnd.ViewModels
     {
         private ITasksService taskService;
         private ICategoryService categoryService;
+        private IExchangeService exchangeService;
 
-        public BancoTiempoViewModel(ITasksService taskService, ICategoryService categoryService)
+        public BancoTiempoViewModel(ITasksService taskService, ICategoryService categoryService, IExchangeService exchangeService)
         {
             this.taskService = taskService;
             this.categoryService = categoryService;
-
+            this.exchangeService = exchangeService;
+            
             GetTasksCommand = new RouteCommand(GetAllTasks);
             InsertTaskCommand = new RouteCommand(InsertTask);
             GetCategoriesCommand = new RouteCommand(GetAllCategories);
             InsertCategoryCommand = new RouteCommand(InsertCategory);
-        
+  
         }
 
 
@@ -50,6 +52,9 @@ namespace BankTimeApp.FrontEnd.ViewModels
         private string CategoriaNameVM;
         public string categoriaNameVM { get { return CategoriaNameVM; } set { CategoriaNameVM = value; OnPropertyChanged(); } }
 
+        private string CategoriaTaskNameVM;
+        public string categoriaTaskNameVM { get { return CategoriaTaskNameVM; } set { CategoriaTaskNameVM = value; OnPropertyChanged(); } }
+
         private string CategoriaDescriptionVM;
         public string categoriaDescriptionVM { get { return CategoriaDescriptionVM; } set { CategoriaDescriptionVM = value; OnPropertyChanged(); } }
 
@@ -67,35 +72,40 @@ namespace BankTimeApp.FrontEnd.ViewModels
             {
                 return;
             }
-            taskListVM = taskList.Data.Select(x=> new TaskListDTO { Id = x.Id, Name = x.Name, CategoryName= x.CategoryId.ToString(), StateName= x.State.ToString() }).ToList();
+            taskListVM = taskList.Data.Select(x=> new TaskListDTO { Id = x.Id, Name = x.Name, Hours = x.Exchange.TimeToCompleteTask, CategoryName= x.CategoryId.ToString(), StateName= x.State.ToString(),UserCreated = x.Exchange.UserCreated, UserAssigned = x.Exchange.UserAssigned }).ToList();
         }
 
         public ICommand InsertTaskCommand { get; set; }
 
         public void InsertTask()
         {
+            var category = categoryService.GetByName(categoriaTaskNameVM);
+            if (!category.Succeeded)
+                return;
             var newTask = new Tasks()
             {
                 Name = taskNameVM,
                 State = (int)TaskState.Open,
-                CategoryId = 1,
-             
-
+                CategoryId = category.Data.Id
             };
+     
             var newExchange = new Exchanges()
             {
                 TimeToCompleteTask = hoursExpectedVM,
-                UserCreated = taskUserCreatedVM,
-                Task = newTask
+                UserCreated = taskUserCreatedVM
             };
 
             var createTask = taskService.Post(newTask);
+            var task = taskService.GetById(newTask.Id);
+            newExchange.TaskId = newTask.Id;
+            var createExchange = exchangeService.Post(newExchange);
 
-            if (createTask.Succeeded)
+            if (createTask.Succeeded && createExchange.Succeeded)
             {
                 taskNameVM = String.Empty;
                 hoursExpectedVM = 0;
                 taskUserCreatedVM = String.Empty;
+                GetAllTasks();
                 return;
             }
             return;
@@ -127,6 +137,7 @@ namespace BankTimeApp.FrontEnd.ViewModels
             if (createcategory.Succeeded)
             {
                 categoriaNameVM = String.Empty;
+                GetAllCategories();
                 return;
             }
             return;

@@ -11,5 +11,6 @@ namespace BankTimeApp.ApplicationLayer.Interfaces.DomainServiceInterfaces
         Response<Tasks> GetByName(string name);
         Response<List<Tasks>> GetAll();
         Response<Tasks> Post(Tasks task);
+        Response<Tasks> Update(Tasks task);
     }
 }

@@ -3,6 +3,7 @@ using BankTimeApp.ApplicationLayer.Interfaces.DomainServiceInterfaces;
 using BankTimeApp.ApplicationLayer.Interfaces.StructuralServices;
 using BankTimeApp.Domain.Entities;
 using BankTimeApp.Infrastructure.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace BankTimeApp.Infrastructure.Persistence.Services
         {
             using (var dbContext = _contextFactory.CreateDbContext())
             {
-                var exchange = dbContext.Exchanges.Find(id);
+                var exchange = dbContext.Exchanges.Include(x=>x.Task).FirstOrDefault(x => x.Id == id);
                 if (exchange == null)
                 {
                     return new Response<Exchanges>("Not found");
@@ -39,7 +40,7 @@ namespace BankTimeApp.Infrastructure.Persistence.Services
         {
             using (var dbContext = _contextFactory.CreateDbContext())
             {
-                var exchanges = dbContext.Exchanges.ToList();
+                var exchanges = dbContext.Exchanges.Include(x => x.Task).ToList();
 
                 if (exchanges.Count == 0)
                 {
@@ -49,7 +50,7 @@ namespace BankTimeApp.Infrastructure.Persistence.Services
             }
 
         }
-        public Response<Exchanges> Update(Exchanges exchange)
+        public Response<Exchanges> Post(Exchanges exchange)
         {
             using (var dbContext = _contextFactory.CreateDbContext())
             {
@@ -61,6 +62,24 @@ namespace BankTimeApp.Infrastructure.Persistence.Services
                 }
 
                 dbContext.Exchanges.Add(exchange);
+                _unitOfWork.Complete(dbContext);
+
+                return new Response<Exchanges>(exchange);
+            }
+
+        }
+        public Response<Exchanges> Update(Exchanges exchange)
+        {
+            using (var dbContext = _contextFactory.CreateDbContext())
+            {
+                var exchangeExists = GetById(exchange.Id);
+
+                if (exchangeExists.Data == null)
+                {
+                    return new Response<Exchanges>("No existe elemento");
+                }
+
+                dbContext.Exchanges.Update(exchange);
                 _unitOfWork.Complete(dbContext);
 
                 return new Response<Exchanges>(exchange);

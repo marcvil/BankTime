@@ -27,7 +27,8 @@ namespace BankTimeApp.FrontEnd.Pages
             InitializeComponent();
             var taskService = new TasksService(new ApplicationDbContextFactory(), new UnitOfWork());
             var categoryService = new CategoryService(new ApplicationDbContextFactory(), new UnitOfWork());
-            this.DataContext = new BancoTiempoViewModel(taskService, categoryService);
+            var exchangesService = new ExchangesService(new ApplicationDbContextFactory(), new UnitOfWork());
+            this.DataContext = new BancoTiempoViewModel(taskService, categoryService, exchangesService);
         }
     }
 }
