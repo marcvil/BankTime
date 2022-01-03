@@ -8,7 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Messages;
+using ToastNotifications.Position;
 using static BankTimeApp.Domain.Enums.Enums;
 
 namespace BankTimeApp.FrontEnd.ViewModels
@@ -68,6 +73,7 @@ namespace BankTimeApp.FrontEnd.ViewModels
             var exchangeList = exchangeService.GetAll();
             if (exchangeList.Succeeded == false)
             {
+                notifier.ShowError(exchangeList.Errors.First());
                 return;
             }
             exchangeListVM = exchangeList.Data.Select(x => new ExchangeListDTO { Id= x.Id,Hours = x.TimeToCompleteTask, UserCreated = x.UserCreated, UserAsigned = x.UserAssigned, IdTareaRelacionada = x.Task.Id, TareaRelacionadaName= x.Task.Name }).ToList();
@@ -80,6 +86,7 @@ namespace BankTimeApp.FrontEnd.ViewModels
             var idExchange = exchangeService.GetById(idTareaAsignarVM);
             if (!idExchange.Succeeded)
             {
+                notifier.ShowError(idExchange.Errors.First());
                 return;
             }
 
@@ -90,6 +97,7 @@ namespace BankTimeApp.FrontEnd.ViewModels
 
             exchangeService.Update(exchange);
             taskService.Update(task);
+            notifier.ShowSuccess("Tarea asignada");
         }
 
         public ICommand CerrarTareaCommand { get; set; }
@@ -99,6 +107,7 @@ namespace BankTimeApp.FrontEnd.ViewModels
             var idExchange = exchangeService.GetById(idTareaCerrarVM);
             if (!idExchange.Succeeded)
             {
+                notifier.ShowError(idExchange.Errors.First());
                 return;
             }
 
@@ -107,6 +116,7 @@ namespace BankTimeApp.FrontEnd.ViewModels
             task.State = (int)TaskState.Completed;
 
             taskService.Update(task);
+            notifier.ShowSuccess("Tarea cerrada correctamente");
         }
 
         public ICommand BuscarUserBalanceCommand { get; set; }
@@ -140,6 +150,23 @@ namespace BankTimeApp.FrontEnd.ViewModels
             horasContraVM = horasContra.ToString();
             balanceTotalVM = BalanceTotal.ToString();
         }
+        #endregion
+
+        #region Notifications
+        Notifier notifier = new Notifier(cfg =>
+        {
+            cfg.PositionProvider = new WindowPositionProvider(
+                parentWindow: Application.Current.MainWindow,
+                corner: Corner.TopRight,
+                offsetX: 10,
+                offsetY: 10);
+
+            cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                notificationLifetime: TimeSpan.FromSeconds(3),
+                maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+            cfg.Dispatcher = Application.Current.Dispatcher;
+        });
         #endregion
     }
 

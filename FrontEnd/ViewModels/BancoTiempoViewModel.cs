@@ -9,6 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using static BankTimeApp.Domain.Enums.Enums;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
+using System.Windows;
+using ToastNotifications.Messages;
 
 namespace BankTimeApp.FrontEnd.ViewModels
 {
@@ -70,9 +75,12 @@ namespace BankTimeApp.FrontEnd.ViewModels
             var taskList = taskService.GetAll();
             if(taskList.Succeeded == false)
             {
+                notifier.ShowError(taskList.Message);
+
                 return;
             }
             taskListVM = taskList.Data.Select(x=> new TaskListDTO { Id = x.Id, Name = x.Name, Hours = x.Exchange.TimeToCompleteTask, CategoryName= x.CategoryId.ToString(), StateName= x.State.ToString(),UserCreated = x.Exchange.UserCreated, UserAssigned = x.Exchange.UserAssigned }).ToList();
+           
         }
 
         public ICommand InsertTaskCommand { get; set; }
@@ -81,7 +89,11 @@ namespace BankTimeApp.FrontEnd.ViewModels
         {
             var category = categoryService.GetByName(categoriaTaskNameVM);
             if (!category.Succeeded)
+            {
+                notifier.ShowError(category.Errors.First());
                 return;
+            }
+              
             var newTask = new Tasks()
             {
                 Name = taskNameVM,
@@ -100,14 +112,19 @@ namespace BankTimeApp.FrontEnd.ViewModels
             newExchange.TaskId = newTask.Id;
             var createExchange = exchangeService.Post(newExchange);
 
-            if (createTask.Succeeded && createExchange.Succeeded)
+            if (!createTask.Succeeded || !createExchange.Succeeded)
             {
-                taskNameVM = String.Empty;
-                hoursExpectedVM = 0;
-                taskUserCreatedVM = String.Empty;
-                GetAllTasks();
+
+                notifier.ShowError("Error al crear el elemento");
+              
                 return;
             }
+
+            taskNameVM = String.Empty;
+            hoursExpectedVM = 0;
+            taskUserCreatedVM = String.Empty;
+            notifier.ShowSuccess("Elemento creado correctamente");
+            GetAllTasks();
             return;
         }
 
@@ -119,6 +136,7 @@ namespace BankTimeApp.FrontEnd.ViewModels
             var categoriesList = categoryService.GetAll();
             if (categoriesList.Succeeded == false)
             {
+                notifier.ShowError(categoriesList.Errors.First());
                 return;
             }
             categoriaListVM = categoriesList.Data;
@@ -137,11 +155,30 @@ namespace BankTimeApp.FrontEnd.ViewModels
             if (createcategory.Succeeded)
             {
                 categoriaNameVM = String.Empty;
+                notifier.ShowSuccess("Elemento creado correctamente");
                 GetAllCategories();
                 return;
             }
+            notifier.ShowError(createcategory.Errors.First());
             return;
         }
+        #endregion
+
+        #region Notifications
+        Notifier notifier = new Notifier(cfg =>
+        {
+            cfg.PositionProvider = new WindowPositionProvider(
+                parentWindow: Application.Current.MainWindow,
+                corner: Corner.TopRight,
+                offsetX: 10,
+                offsetY: 10);
+
+            cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                notificationLifetime: TimeSpan.FromSeconds(3),
+                maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+            cfg.Dispatcher = Application.Current.Dispatcher;
+        });
         #endregion
     }
 }

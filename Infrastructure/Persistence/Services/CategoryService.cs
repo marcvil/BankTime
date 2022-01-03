@@ -28,7 +28,7 @@ namespace BankTimeApp.Infrastructure.Persistence.Services
                 var category = dbContext.Categories.Find(id);
                 if (category == null)
                 {
-                    return new Response<Category>("Not found");
+                    return new Response<Category>("Categoria no encontrada");
                 }
                 return new Response<Category>(category);
             }
@@ -42,7 +42,7 @@ namespace BankTimeApp.Infrastructure.Persistence.Services
 
                 if (category == null)
                 {
-                    return new Response<Category>("Doesn't exist");
+                    return new Response<Category>("Categoria no encontrada");
                 }
                 return new Response<Category>(category);
             }
@@ -57,7 +57,7 @@ namespace BankTimeApp.Infrastructure.Persistence.Services
 
                 if (categories.Count == 0)
                 {
-                    return new Response<List<Category>>("No existen tareas");
+                    return new Response<List<Category>>("No existe ninguna categoria");
                 }
                 return new Response<List<Category>>(categories);
             }
@@ -71,7 +71,7 @@ namespace BankTimeApp.Infrastructure.Persistence.Services
 
                 if (categoryExists.Data != null)
                 {
-                    return new Response<Category>("Already exist with this name");
+                    return new Response<Category>("Ya existe una tarea con este nombre con este nombre");
                 }
 
                 dbContext.Categories.Add(category);
